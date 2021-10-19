@@ -7,7 +7,7 @@ const GallerySchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    ImagURL:{
+    ImgURL:{
         type:String,
         unique:true,
         required:true

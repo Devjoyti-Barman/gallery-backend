@@ -42,7 +42,7 @@ const uploadImage=async (req,res)=>{
 
         const newGallery= new Gallery({
             ImgName:req.body.ImgName,
-            ImagURL:req.file.filename,
+            ImgURL:req.file.filename,
             ImgDetail:req.body.ImgDetail
         });
 
