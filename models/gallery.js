@@ -19,6 +19,9 @@ const GallerySchema=new mongoose.Schema({
 
 },{timestamps:true})
 
+GallerySchema.index({ImgName:'text'});
+//GallerySchema.set('autoIndex', false);
+
 const Gallery=mongoose.model("Gallery",GallerySchema);
 
 export default Gallery;
