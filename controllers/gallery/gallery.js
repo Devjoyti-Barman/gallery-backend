@@ -13,7 +13,7 @@ const uploadImage=async (req,res)=>{
    
         await upload(req,res);
     
-        const {ImgName,ImgDetail}=req.body;
+        const {ImgName,ImgDetails}=req.body;
 
         if( ImgName===undefined || ImgName===null || ImgName.length <4){
 
@@ -26,7 +26,7 @@ const uploadImage=async (req,res)=>{
             
             return res.status(400).send({error:'ImgName must be greater then length 3'});
         }
-        if(ImgDetail===undefined || ImgDetail===null || ImgDetail.length <4 ) {
+        if(ImgDetails===undefined || ImgDetails===null || ImgDetails.length <4 ) {
             
             fs.unlink( path.join(__dirname,'uploads',req.file.filename),function(err){
                 
@@ -36,14 +36,14 @@ const uploadImage=async (req,res)=>{
                 }
             });
             
-            return res.status(400).send({error:'ImgDetail must be greater then length 3'});
+            return res.status(400).send({error:'ImgDetails must be greater then length 3'});
         }
 
 
         const newGallery= new Gallery({
             ImgName:req.body.ImgName,
             ImgURL:req.file.filename,
-            ImgDetail:req.body.ImgDetail
+            ImgDetails:req.body.ImgDetails
         });
 
         await newGallery.save();

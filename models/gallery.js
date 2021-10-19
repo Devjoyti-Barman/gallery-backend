@@ -12,7 +12,7 @@ const GallerySchema=new mongoose.Schema({
         unique:true,
         required:true
     },
-    ImgDetail:{
+    ImgDetails:{
         type:String,
         required:true
     },

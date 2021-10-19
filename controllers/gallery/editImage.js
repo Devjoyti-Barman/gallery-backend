@@ -15,17 +15,20 @@ const editImage=async (req,res)=>{
             
         }
 
-        const {ImgName,ImgDetail}=req.body;
+        const {ImgName,ImgDetails}=req.body;
 
         if( ImgName===undefined || ImgName===null || ImgName.length <4){
             return res.status(400).send({error:'ImgName must be greater then length 3'});
         }
-        if(ImgDetail===undefined || ImgDetail===null || ImgDetail.length <4 ) {
-            return res.status(400).send({error:'ImgDetail must be greater then length 3'});
+        if(ImgDetails===undefined || ImgDetails===null || ImgDetails.length <4 ) {
+            return res.status(400).send({error:'ImgDetails must be greater then length 3'});
         }
 
+        const data=await Gallery.findById(req.body.id);
 
-        await Gallery.updateOne({_id:req.body.id},{ImgName,ImgDetail});
+        if(data===null) return res.status(400).send('The image does not exist');
+    
+        await Gallery.updateOne({_id:req.body.id},{ImgName,ImgDetails});
 
         res.send('The image updated successfully');
     } catch (error) {
