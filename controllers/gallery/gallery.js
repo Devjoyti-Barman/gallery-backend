@@ -1,29 +1,48 @@
 
 import Gallery from '../../models/gallery.js';
 import upload from '../../moddlewares/upload.js';
+import fs from 'fs';
 
+import path from 'path';
+const __dirname = path.resolve();
 
 const uploadImage=async (req,res)=>{
     
     try {
         
-        const {ImgName,ImgDetail}=req.body;
-        
-        // console.log(ImgName);
-        // console.log(ImgDetail);
-
-        // if( ImgName===undefined || ImgName===null || ImgName.length <4){
-        //     return res.status(400).send({error:'ImgName must be greater then length 3'});
-        // }
-        // if(ImgDetail===undefined || ImgDetail===null || ImgDetail.length <4 ) {
-        //     return res.status(400).send({error:'ImgDetail must be greater then length 3'});
-        // }
-
+   
         await upload(req,res);
+    
+        const {ImgName,ImgDetail}=req.body;
+
+        if( ImgName===undefined || ImgName===null || ImgName.length <4){
+
+            fs.unlink( path.join(__dirname,'uploads',req.file.filename),function(err){
+                 
+                if(err){
+                    throw new Error(err);
+                }
+            });
+            
+            return res.status(400).send({error:'ImgName must be greater then length 3'});
+        }
+        if(ImgDetail===undefined || ImgDetail===null || ImgDetail.length <4 ) {
+            
+            fs.unlink( path.join(__dirname,'uploads',req.file.filename),function(err){
+                
+                if( err){
+
+                    throw new Error(err);
+                }
+            });
+            
+            return res.status(400).send({error:'ImgDetail must be greater then length 3'});
+        }
+
 
         const newGallery= new Gallery({
             ImgName:req.body.ImgName,
-            ImagURL:req.file.path,
+            ImagURL:req.file.filename,
             ImgDetail:req.body.ImgDetail
         });
 
@@ -32,6 +51,7 @@ const uploadImage=async (req,res)=>{
         res.send(newGallery);
   
     } catch (error) {
+
         res.status(400).send(error);
     }
       
