@@ -6,7 +6,7 @@ import path from 'path';
 const __dirname = path.resolve();
 
 
-const getImage=async (req,res)=>{
+const deleteImage=async (req,res)=>{
      
     try {
         
@@ -17,20 +17,19 @@ const getImage=async (req,res)=>{
 
         let Image=await Gallery.findById(req.body.id);
         
-
-        fs.readFile(path.join(__dirname,'uploads',Image.ImgURL) , (err, data) => {
-            if (err) {
-              return res.status(400).send('The file does not exist');
-              
-            }
+        fs.unlink( path.join(__dirname,'uploads',Image.ImgURL),function(err){
                 
-            return res.send({Image,data});
-            
-        })        
+            if( err){
+                throw new Error(err);
+            }
 
+        });
+        
+        await Image.remove();
+        res.send('The image deleted successfully');
     } catch (error) {
         res.status(400).send(error);
     }
 }
 
-export default getImage;
+export default deleteImage;
