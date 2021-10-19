@@ -13,7 +13,7 @@ const router=express.Router();
 router.route('/upload-image').post(uploadImage);
 router.route('/search-image/:imgName').get(searchImgByName);
 router.route('/image/page/:pageNo').get(getImageList);
-router.route('/get-image').get(getImage);
+router.route('/get-image/:id').get(getImage);
 router.route('/detele-image').delete(deleteImage);
 router.route('/edit-image').put(editImage);
 

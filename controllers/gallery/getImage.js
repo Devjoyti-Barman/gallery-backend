@@ -10,23 +10,16 @@ const getImage=async (req,res)=>{
      
     try {
         
-        if( mongoose.isValidObjectId(req.body.id) === false ){
+        if( mongoose.isValidObjectId(req.params.id) === false ){
             return res.status(400).send( {error:'The image does not exist'} );
             
         }
 
-        let Image=await Gallery.findById(req.body.id);
+        let Image=await Gallery.findById(req.params.id);
         
-
-        fs.readFile(path.join(__dirname,'uploads',Image.ImgURL) , (err, data) => {
-            if (err) {
-              return res.status(400).send('The file does not exist');
-              
-            }
-                
-            return res.send({Image,data});
-            
-        })        
+        const data='data:image/jpeg;base64,'+fs.readFileSync(path.join(__dirname,'uploads',Image.ImgURL),{encoding: 'base64'});
+        
+        return res.send({Image,data});   
 
     } catch (error) {
         res.status(400).send(error);

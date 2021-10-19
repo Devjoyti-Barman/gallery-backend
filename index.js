@@ -8,11 +8,15 @@ import ExpressFormidable from 'express-formidable';
 import connectDB from "./connections/db.js";
 import galleryRouter from './routes/gallery.js';
 dotenv.config();
+import path from 'path';
+const __dirname = path.resolve();
 
 
 const app=express();
 
 app.use(cors());
+app.use(express.static(path.join(__dirname,'uploads')));
+
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: false }));
 //app.use(fileUpload());

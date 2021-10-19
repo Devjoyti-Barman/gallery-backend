@@ -28,7 +28,7 @@ const getImageList=async (req,res)=>{
             temp.ImgName=image.ImgName;
             temp.ImgDetails=image.ImgDetails;
             
-            temp.img=fs.readFileSync(path.join(__dirname,'uploads',image.ImgURL) );
+            temp.img='data:image/jpeg;base64,'+fs.readFileSync(path.join(__dirname,'uploads',image.ImgURL) );
 
             return temp;
         })
