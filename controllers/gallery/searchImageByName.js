@@ -10,7 +10,7 @@ const searchImgByName=async (req,res)=>{
      
     try {
        
-        const data=await Gallery.find({$regex:{$search:req.params.imgName}}).limit(5);
+        const data=await Gallery.find({ImgName:req.params.imgName});
         
 
         let Images=data.map((image)=>{
